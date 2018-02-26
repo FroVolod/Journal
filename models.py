@@ -54,22 +54,6 @@ class Author(db.Model):
             s = self.l_name + ' ' + self.f_name
             self.slug = slugify(s)
 
-    def co_author(self):
-        print('Проверка входа в def co_author')
-        if request.method == 'POST' and request.form['f_name']:
-            print('Проверка reques.method:', request.method)
-            coauthor = Coauthor.query.filter(Coauthor.slug == self.slug).first()
-            if coauthor:
-                coauthor.f_name = self.f_name
-                coauthor.l_name = self.l_name
-                coauthor.organization = self.organization
-                coauthor.email = self.email
-                coauthor.phone = self.phone
-                db.session.merge(coauthor)
-            else:
-                coauthor = Coauthor(f_name = self.f_name, l_name = self.l_name, organization = self.organization, email = self.email, phone = self.phone)
-                db.session.add(coauthor)
-            db.session.commit()
 
     def __repr__(self):
         return '{} {}, {}'.format(self.l_name, self.f_name, self.organization)

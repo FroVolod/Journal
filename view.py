@@ -75,10 +75,13 @@ class ArticleAdminView(AdminMixin, BaseModelView):
                 print("Incorrect filename: '%s'" % file.filename)
                 return redirect('/')
 
+            jour = request.form['journal']
+            journal = Journal.query.filter(Journal.id == jour).first()
             author = Author.query.filter(Author.id == request.form['author']).first()
             print(file.filename.rsplit('.', 1)[1])
-            file_name = re.sub(r'[^\w+]', '_', model.l_journal() + '_' +  author.l_name + '_' + author.f_name + '_' + author.organization) + '.pdf'
+            file_name = re.sub(r'[^\w+]', '_', journal.slug + '_' + author.l_name + '_' + author.f_name + '_' + author.organization) + '.pdf'
             try:
+                print('journal  ', journal)
                 model.file_name = file_name
                 file.save('pdf_files/' + file_name)
             except:

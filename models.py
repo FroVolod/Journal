@@ -51,7 +51,7 @@ class Author(db.Model):
 
     def generate_slug(self):
         if self.l_name:
-            s = self.l_name + ' ' + self.f_name + ' ' + self.organization
+            s = self.l_name + ' ' + self.f_name
             self.slug = slugify(s)
 
     def co_author(self):

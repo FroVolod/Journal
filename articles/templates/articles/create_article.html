@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Pro
+{% endblock %}
+
+
+{% block content_title %}
+    Создание статьи
+{% endblock %}
+
+
+{% block content %}
+    <div class="col-md-6">
+        <form action="{{ url_for('articles.create_article') }}" method="POST" enctype="multipart/form-data">
+            {% for field in form %}
+                <div class="form-field">
+                    <p>
+                        {{ field.label(class = 'control-label') }}
+                        {{ field(class = 'form-control') }}
+                    </p>
+                </div>
+            {% endfor %}
+        </form>
+
+    <button type="submit">Create</button>
+
+    </div>
+{% endblock %}

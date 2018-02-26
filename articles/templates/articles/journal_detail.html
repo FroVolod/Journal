@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+
+{% block content_title %}
+    Статьи журнала № {{ number }} за {{ year }} год
+{% endblock %}
+
+
+{% block content %}
+
+
+    {% for a in articles %}
+        <div>
+            <p>
+                Статья:
+                <a href="{{ url_for('articles.article_detail', slug = a.slug) }}">
+                    {{ a.article_name }}
+                </a>
+            </p>
+            <p>
+                Авторы:
+                <a href="">
+                    {{a.author.l_name}} {{a.author.f_name}}
+                </a>
+
+                {% for c in a.coauthors %}
+                    <a href="">,  {{ c.l_name }} {{c.f_name}} </a>
+                {% endfor %}
+
+            </p>
+        </div>
+    {% endfor %}
+
+
+
+
+
+{% endblock %}

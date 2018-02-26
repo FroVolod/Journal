@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+
+{% block content_title %}
+    {{ article.article_name }}
+{% endblock %}
+
+
+{% block content %}
+
+
+    {% for a in articles %}
+        <div>
+            <p>
+                Статья:
+                <a href="{{ url_for('articles.article_detail', slug = a.slug) }}">
+                    {{ a.article_name }}
+                </a>
+            </p>
+            <p>
+                Авторы:
+                <a href="">
+                    {{a.author.l_name}} {{a.author.f_name}}
+                </a>
+            </p>
+        </div>
+    {% endfor %}
+
+
+
+
+
+{% endblock %}

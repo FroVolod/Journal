@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Articles
+{% endblock %}
+
+
+{% block content_title %}
+    Articles
+{% endblock %}
+
+
+{% block content %}
+    {% for article in pages.items %}
+        <p>
+
+            <a href=""> {{article.article_name}} </a>
+        </p>
+    {% endfor %}
+
+    <nav>
+      <ul class="pagination">
+        <li
+            {% if not pages.has_prev %}
+                class="disabled"
+            {% endif %}>
+            <a href="./?page={{ pages.prev_num }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+
+        {% for page in pages.iter_pages() %}
+            <li
+                {% if page == pages.page %}
+                    class="active"
+                {% endif %}>
+            <a href="./?page={{ page }}">{{ page }}<span class="sr-only">(current)</span></a></li>
+        {% endfor %}
+
+        <li
+            {% if not pages.has_next %}
+                class="disabled"
+            {% endif %}>
+            <a href="./?page={{ pages.next_num }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+
+      </ul>
+    </nav>
+
+
+{% endblock %}

@@ -25,6 +25,12 @@ articles_coauthors = db.Table('articles_coauthors',
                               db.Column('coauthor_id', db.Integer, db.ForeignKey('coauthor.id'))
                               )
 
+
+authors_orgs = db.Table('authors_orgs',
+                        db.Column('author_id', db.Integer, db.ForeignKey('author.id')),
+                        db.Column('organization_id', db.Integer, db.ForeignKey('organization.id'))
+                        )
+
 '''''
 class Articles_authors(db.Model):
     id         = db.Column(db.Integer, primary_key=True)
@@ -32,6 +38,12 @@ class Articles_authors(db.Model):
     role       = db.Column(db.String(20))
     author_id  = db.Column(db.Integer, db.ForeignKey('author.id'))
 '''
+class Organization(db.Model):
+    id   = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.Text)
+    slug = db.Column(db.String(250), unique = True)
+    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
+    __mapper_args__ = {'order_by': slug.desc()}
 
 
 
@@ -41,7 +53,8 @@ class Author(db.Model):
     l_name  = db.Column(db.String(80))
     email   = db.Column(db.String(120), unique = True)
     phone   = db.Column(db.String(30))
-    articles = db.relationship('Article', backref='author', lazy='dynamic')
+    articles= db.relationship('Article', backref='author', lazy='dynamic')
+    orgs    = db.relationship('Organization', backref = 'author', lazy = 'dynamic')
     organization = db.Column(db.Text)
     slug = db.Column(db.String(250), unique = True)
 

@@ -111,10 +111,13 @@ class TopicAdminView(AdminMixin, BaseModelView):
     column_default_sort = 'topic_name'
     form_columns = ['topic_name']
 
+class OrgsAdminView(AdminMixin, BaseModelView):
+    form_columns = ['name']
+
 class AuthorAdminView(AdminMixin, BaseModelView):
     column_default_sort = 'l_name'
     column_list = ('l_name', 'f_name', 'organization', 'email', 'phone')
-    form_columns = ['l_name', 'f_name', 'organization', 'email', 'phone']
+    form_columns = ['l_name', 'f_name', 'organization', 'email', 'phone', 'orgs']
 
     inline_models = [(Article, dict(form_columns = ['id', 'journal', 'article_name', 'annotation_ua', 'annotation_ua', 'key_words_ua', 'key_words', 'topic']))]
 
@@ -142,3 +145,4 @@ admin.add_view(AuthorAdminView(Author, db.session))
 admin.add_view(ArticleAdminView(Article, db.session))
 admin.add_view(TopicAdminView(Topic, db.session))
 admin.add_view(JournalAdminView(Journal, db.session))
+admin.add_view(OrgsAdminView(Organization, db.session))

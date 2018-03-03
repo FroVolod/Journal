@@ -45,6 +45,17 @@ class Organization(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
     __mapper_args__ = {'order_by': slug.desc()}
 
+    def __init__(self, *args, **kwargs):
+        super(Organization, self).__init__(*args, **kwargs)
+        self.generate_slug()
+
+    def generate_slug(self):
+        if self.topic_name:
+            self.slug = slugify(self.name)
+
+    def __repr__(self):
+        return '{}'.format(self.name)
+
 
 
 class Author(db.Model):

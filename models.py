@@ -26,31 +26,25 @@ articles_coauthors = db.Table('articles_coauthors',
                               )
 
 
-authors_orgs = db.Table('authors_orgs',
-                        db.Column('author_id', db.Integer, db.ForeignKey('author.id')),
-                        db.Column('organization_id', db.Integer, db.ForeignKey('organization.id'))
-                        )
+authors_organizations = db.Table('authors_organizations',
+                                 db.Column('author_id', db.Integer, db.ForeignKey('author.id')),
+                                 db.Column('organization_id', db.Integer, db.ForeignKey('organization.id'))
+                                 )
 
-'''''
-class Articles_authors(db.Model):
-    id         = db.Column(db.Integer, primary_key=True)
-    article_id = db.Column(db.Integer, db.ForeignKey('article.id'))
-    role       = db.Column(db.String(20))
-    author_id  = db.Column(db.Integer, db.ForeignKey('author.id'))
-'''
+
 class Organization(db.Model):
     id   = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.Text)
     slug = db.Column(db.String(250), unique = True)
-    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
-    __mapper_args__ = {'order_by': slug.desc()}
+    #author = db.relationship('Author', backref = 'organization', lazy = 'dynamic')
+    #__mapper_args__ = {'order_by': slug.desc()}
 
     def __init__(self, *args, **kwargs):
         super(Organization, self).__init__(*args, **kwargs)
         self.generate_slug()
 
     def generate_slug(self):
-        if self.topic_name:
+        if self.name:
             self.slug = slugify(self.name)
 
     def __repr__(self):
@@ -65,9 +59,10 @@ class Author(db.Model):
     email   = db.Column(db.String(120), unique = True)
     phone   = db.Column(db.String(30))
     articles= db.relationship('Article', backref='author', lazy='dynamic')
-    orgs    = db.relationship('Organization', backref = 'author', lazy = 'dynamic')
-    organization = db.Column(db.Text)
+    #organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'))
+    #organization = db.relationship('Organization', secondary = 'authors_organizations', backref = db.backref('author', lazy = 'dynamic'))
     slug = db.Column(db.String(250), unique = True)
+    org     = db.Column(db.Text)
 
     def __init__(self, *args, **kwargs):
         super(Author, self).__init__(*args, **kwargs)
@@ -78,9 +73,8 @@ class Author(db.Model):
             s = self.l_name + ' ' + self.f_name
             self.slug = slugify(s)
 
-
     def __repr__(self):
-        return '{} {}, {}'.format(self.l_name, self.f_name, self.organization)
+        return '{} {}, {}'.format(self.l_name, self.f_name, self.org)
 
 
 class Coauthor(db.Model):
@@ -89,8 +83,8 @@ class Coauthor(db.Model):
     l_name = db.Column(db.String(80))
     email = db.Column(db.String(120), unique=True)
     phone = db.Column(db.String(30))
-    organization = db.Column(db.Text)
     slug = db.Column(db.String(250), unique=True)
+    organization = db.Column(db.Text)
 
     def __init__(self, *args, **kwargs):
         super(Coauthor, self).__init__(*args, **kwargs)
@@ -125,6 +119,8 @@ class Article(db.Model):
     author_id    = db.Column(db.Integer, db.ForeignKey('author.id'))
     topic_id     = db.Column(db.Integer, db.ForeignKey('topic.id'))
     coauthors    = db.relationship('Coauthor', secondary = articles_coauthors, backref='articles', lazy='dynamic')
+    org          = db.Column(db.Text)
+    authors      = db.Column(db.String(170))
 
 
     def __init__(self, *args, **kwargs):

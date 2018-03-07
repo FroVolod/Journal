@@ -15,17 +15,19 @@ def co_author(author):
     if request.method == 'POST' and request.form['f_name']:
         print('Проверка reques.method:', request.method)
         author = request.form
+        print(author['org'])
         coauthor = Coauthor.query.filter(Coauthor.f_name == author['f_name']).first()
         if coauthor:
             coauthor.f_name = author['f_name']
             coauthor.l_name = author['l_name']
-            coauthor.organization = author['organization']
+            coauthor.organization = author['org']
+            #coauthor.organization = Organization.query.filter(Organization.id == author['organization']).first().name
             coauthor.email = author['email']
             coauthor.phone = author['phone']
             #coauthor.slug = author.slug
             db.session.merge(coauthor)
         else:
-            coauthor = Coauthor(f_name=author['f_name'], l_name=author['l_name'], organization=author['organization'],
+            coauthor = Coauthor(f_name=author['f_name'], l_name=author['l_name'], organization=author['org'],
                                 email=author['email'], phone=author['phone'])
             db.session.add(coauthor)
         db.session.commit()
@@ -74,7 +76,8 @@ class BaseModelView(ModelView):
         return super(BaseModelView, self).on_model_change(form, model, is_created)
 
 class ArticleAdminView(AdminMixin, BaseModelView):
-    column_list = ('author', 'article_name', 'topic', 'file_name', 'created')
+    column_labels = dict(org='Organization')
+    column_list = ('authors', 'org', 'article_name', 'topic', 'file_name', 'created')
     #column_sortable_list = ('file_name')
     #column_default_sort = 'author'
     can_view_details = True
@@ -87,23 +90,36 @@ class ArticleAdminView(AdminMixin, BaseModelView):
 
 
     def on_model_change(self, form, model, is_created):
-        if request.method == 'POST':
-            file = request.files['file']
-            if os.path.splitext(file.filename)[1] != '.pdf':
-                print("Incorrect filename: '%s'" % file.filename)
-                return redirect('/')
+        try:
+            if request.method == 'POST':
+                file = request.files['file']
+                if os.path.splitext(file.filename)[1] != '.pdf':
+                    print("Incorrect filename: '%s'" % file.filename)
+                    return redirect('/')
 
-            jour = request.form['journal']
-            journal = Journal.query.filter(Journal.id == jour).first()
-            author = Author.query.filter(Author.id == request.form['author']).first()
-            print(file.filename.rsplit('.', 1)[1])
-            file_name = re.sub(r'[^\w+]', '_', journal.slug + '_' + author.l_name + '_' + author.f_name + '_' + author.organization) + '.pdf'
-            try:
-                print('journal  ', journal)
-                model.file_name = file_name
-                file.save('pdf_files/' + file_name)
-            except:
-                print('Внимание! Ошибка')
+                jour = request.form['journal']
+                journal = Journal.query.filter(Journal.id == jour).first()
+                author = Author.query.filter(Author.id == request.form['author']).first()
+                model.org = author.org
+                model.authors = author.l_name + ' ' + author.f_name
+                print(file.filename.rsplit('.', 1)[1])
+                print(author.org)
+                print(author.f_name)
+                print(author.l_name)
+                print(journal.slug)
+                #print(re.sub(r'[^\w+]', '_', journal.slug + '_' + author.l_name + '_' + author.f_name + '_' + author.organization) + '.pdf')
+                file_name =re.sub(r'[^\w+]', '_', journal.slug + '_' + author.l_name + '_' + author.f_name + '_' + author.org) + '.pdf'
+                print(author.org)
+                print(file_name)
+                try:
+                    print('journal  ', journal)
+                    model.file_name = file_name
+                    file.save('pdf_files/' + file_name)
+                except:
+                    print('Внимание! Ошибка')
+        except Exception as e:
+            print(e)
+            raise
 
         return super(ArticleAdminView, self).on_model_change(form, model, is_created)
 
@@ -116,8 +132,9 @@ class OrgsAdminView(AdminMixin, BaseModelView):
 
 class AuthorAdminView(AdminMixin, BaseModelView):
     column_default_sort = 'l_name'
-    column_list = ('l_name', 'f_name', 'organization', 'email', 'phone')
-    form_columns = ['l_name', 'f_name', 'organization', 'email', 'phone', 'orgs']
+    column_labels = dict(org = 'Organization')
+    column_list = ('l_name', 'f_name', 'org', 'email', 'phone')
+    form_columns = ['l_name', 'f_name', 'org', 'email', 'phone']
 
     inline_models = [(Article, dict(form_columns = ['id', 'journal', 'article_name', 'annotation_ua', 'annotation_ua', 'key_words_ua', 'key_words', 'topic']))]
 

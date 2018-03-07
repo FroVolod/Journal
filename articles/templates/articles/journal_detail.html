@@ -26,9 +26,14 @@
                 <a href="">
                     {{a.author.l_name}} {{a.author.f_name}}
                 </a>
+                <a href="">
+                    ( {{ a.org }} )
+                </a>
 
                 {% for c in a.coauthors %}
-                    <a href="">,  {{ c.l_name }} {{c.f_name}} </a>
+                    <p>
+                        <a href="">  {{ c.l_name }} {{c.f_name}} </a>
+                    </p>
                 {% endfor %}
 
             </p>

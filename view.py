@@ -127,8 +127,6 @@ class TopicAdminView(AdminMixin, BaseModelView):
     column_default_sort = 'topic_name'
     form_columns = ['topic_name']
 
-class OrgsAdminView(AdminMixin, BaseModelView):
-    form_columns = ['name']
 
 class AuthorAdminView(AdminMixin, BaseModelView):
     column_default_sort = 'l_name'
@@ -162,4 +160,3 @@ admin.add_view(AuthorAdminView(Author, db.session))
 admin.add_view(ArticleAdminView(Article, db.session))
 admin.add_view(TopicAdminView(Topic, db.session))
 admin.add_view(JournalAdminView(Journal, db.session))
-admin.add_view(OrgsAdminView(Organization, db.session))

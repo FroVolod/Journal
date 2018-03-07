@@ -26,29 +26,7 @@ articles_coauthors = db.Table('articles_coauthors',
                               )
 
 
-authors_organizations = db.Table('authors_organizations',
-                                 db.Column('author_id', db.Integer, db.ForeignKey('author.id')),
-                                 db.Column('organization_id', db.Integer, db.ForeignKey('organization.id'))
-                                 )
 
-
-class Organization(db.Model):
-    id   = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.Text)
-    slug = db.Column(db.String(250), unique = True)
-    #author = db.relationship('Author', backref = 'organization', lazy = 'dynamic')
-    #__mapper_args__ = {'order_by': slug.desc()}
-
-    def __init__(self, *args, **kwargs):
-        super(Organization, self).__init__(*args, **kwargs)
-        self.generate_slug()
-
-    def generate_slug(self):
-        if self.name:
-            self.slug = slugify(self.name)
-
-    def __repr__(self):
-        return '{}'.format(self.name)
 
 
 

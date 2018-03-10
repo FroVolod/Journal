@@ -37,8 +37,6 @@ class Author(db.Model):
     email   = db.Column(db.String(120), unique = True)
     phone   = db.Column(db.String(30))
     articles= db.relationship('Article', backref='author', lazy='dynamic')
-    #organization_id = db.Column(db.Integer, db.ForeignKey('organization.id'))
-    #organization = db.relationship('Organization', secondary = 'authors_organizations', backref = db.backref('author', lazy = 'dynamic'))
     slug = db.Column(db.String(250), unique = True)
     org     = db.Column(db.Text)
 
@@ -81,7 +79,6 @@ class Article(db.Model):
     id           = db.Column(db.Integer, primary_key = True)
     article_name = db.Column(db.String(250))
     slug         = db.Column(db.String(250), unique = True)
-    #co_author    = db.Column(db.Text)
     num_pages    = db.Column(db.Integer)
     review       = db.Column(db.Boolean())
     created      = db.Column(db.DateTime, default = datetime.now())

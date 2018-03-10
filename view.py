@@ -73,16 +73,20 @@ class BaseModelView(ModelView):
     #create_modal = True
     def on_model_change(self, form, model, is_created):
         model.generate_slug()
+        if is_created:
+            print('OK')
+        else:
+            print('FALSE')
         return super(BaseModelView, self).on_model_change(form, model, is_created)
 
 class ArticleAdminView(AdminMixin, BaseModelView):
     column_labels = dict(org='Organization')
-    column_list = ('authors', 'org', 'article_name', 'topic', 'file_name', 'created')
+    column_list = ('authors', 'org', 'article_name', 'topic', 'created', 'file_name', 'update_file', 'review')
     #column_sortable_list = ('file_name')
     #column_default_sort = 'author'
     can_view_details = True
     column_default_sort =('created', True)
-    form_columns = ['journal', 'author', 'coauthors', 'article_name', 'annotation_ua', 'annotation_ua', 'key_words_ua', 'key_words', 'topic', 'file']
+    form_columns = ['journal', 'author', 'coauthors', 'topic', 'article_name', 'num_pages', 'annotation_ua', 'annotation_ua', 'key_words_ua', 'key_words', 'review', 'file']
     #form_args = dict(journal=dict(default=(Journal.query.order_by(Journal.id.desc()).first().id)))
     form_extra_fields = {'file': FileField('File (.pdf)')}
     new_author = FormField(New_Author)
@@ -107,13 +111,13 @@ class ArticleAdminView(AdminMixin, BaseModelView):
                 print(author.f_name)
                 print(author.l_name)
                 print(journal.slug)
-                #print(re.sub(r'[^\w+]', '_', journal.slug + '_' + author.l_name + '_' + author.f_name + '_' + author.organization) + '.pdf')
                 file_name =re.sub(r'[^\w+]', '_', journal.slug + '_' + author.l_name + '_' + author.f_name + '_' + author.org) + '.pdf'
                 print(author.org)
                 print(file_name)
                 try:
                     print('journal  ', journal)
                     model.file_name = file_name
+                    model.update_file = datetime.now()
                     file.save('pdf_files/' + file_name)
                 except:
                     print('Внимание! Ошибка')
@@ -134,7 +138,7 @@ class AuthorAdminView(AdminMixin, BaseModelView):
     column_list = ('l_name', 'f_name', 'org', 'email', 'phone')
     form_columns = ['l_name', 'f_name', 'org', 'email', 'phone']
 
-    inline_models = [(Article, dict(form_columns = ['id', 'journal', 'article_name', 'annotation_ua', 'annotation_ua', 'key_words_ua', 'key_words', 'topic']))]
+    #inline_models = [(Article, dict(form_columns = ['id', 'journal', 'article_name', 'annotation_ua', 'annotation_ua', 'key_words_ua', 'key_words', 'topic']))]
 
 
     def on_model_change(self, form, model, is_created):

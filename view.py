@@ -70,16 +70,14 @@ class AdminMixin:
 class BaseModelView(ModelView):
     page_size = 14
     column_exclude_list = ('slug')
-    #create_modal = True
+    create_modal = True
+    edit_modal = True
     def on_model_change(self, form, model, is_created):
         model.generate_slug()
-        if is_created:
-            print('OK')
-        else:
-            print('FALSE')
         return super(BaseModelView, self).on_model_change(form, model, is_created)
 
 class ArticleAdminView(AdminMixin, BaseModelView):
+    column_searchable_list = ('authors', 'article_name', 'org', 'file_name')
     column_labels = dict(org='Organization')
     column_list = ('authors', 'org', 'article_name', 'topic', 'created', 'file_name', 'update_file', 'review')
     #column_sortable_list = ('file_name')
@@ -133,6 +131,7 @@ class TopicAdminView(AdminMixin, BaseModelView):
 
 
 class AuthorAdminView(AdminMixin, BaseModelView):
+    column_searchable_list = ('l_name', 'f_name', 'org', 'email', 'phone')
     column_default_sort = 'l_name'
     column_labels = dict(org = 'Organization')
     column_list = ('l_name', 'f_name', 'org', 'email', 'phone')

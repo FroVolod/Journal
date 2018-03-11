@@ -99,8 +99,9 @@ class ArticleAdminView(AdminMixin, BaseModelView):
         try:
             if request.method == 'POST':
                 file = request.files['file']
-                if os.path.splitext(file.filename)[1] != '.pdf':
+                if os.path.splitext(file.filename)[1] not in ('.pdf', '.docx', '.doc'):
                     print("Incorrect filename: '%s'" % file.filename)
+                    print(os.path.splitext(file.filename)[1])
                     return redirect('/')
 
                 jour = request.form['journal']
@@ -113,7 +114,8 @@ class ArticleAdminView(AdminMixin, BaseModelView):
                 print(author.f_name)
                 print(author.l_name)
                 print(journal.slug)
-                file_name =re.sub(r'[^\w+]', '_', journal.slug + '_' + author.l_name + '_' + author.f_name + '_' + author.org) + '.pdf'
+                file_name =re.sub(r'[^\w+]', '_', journal.slug + '_' + author.l_name + '_' + author.f_name + '_' + author.org)\
+                                    + str(os.path.splitext(file.filename)[1])
                 print(author.org)
                 print(file_name)
                 try:

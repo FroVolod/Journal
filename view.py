@@ -21,6 +21,9 @@ def co_author(author):
             coauthor.f_name = author['f_name']
             coauthor.l_name = author['l_name']
             coauthor.organization = author['org']
+            coauthor.stepen = author['stepen']
+            coauthor.zvanie = author['zvanie']
+            coauthor.dolzh = author['dolzh']
             #coauthor.organization = Organization.query.filter(Organization.id == author['organization']).first().name
             coauthor.email = author['email']
             coauthor.phone = author['phone']
@@ -28,7 +31,8 @@ def co_author(author):
             db.session.merge(coauthor)
         else:
             coauthor = Coauthor(f_name=author['f_name'], l_name=author['l_name'], organization=author['org'],
-                                email=author['email'], phone=author['phone'])
+                                email=author['email'], phone=author['phone'], stepen = author['stepen'],
+                                zvanie = author['zvanie'], dolzh = author['dolzh'])
             db.session.add(coauthor)
         db.session.commit()
 
@@ -134,8 +138,8 @@ class AuthorAdminView(AdminMixin, BaseModelView):
     column_searchable_list = ('l_name', 'f_name', 'org', 'email', 'phone')
     column_default_sort = 'l_name'
     column_labels = dict(org = 'Organization')
-    column_list = ('l_name', 'f_name', 'org', 'email', 'phone')
-    form_columns = ['l_name', 'f_name', 'org', 'email', 'phone']
+    column_list = ('l_name', 'f_name','stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone')
+    form_columns = ['l_name', 'f_name','stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone']
 
     #inline_models = [(Article, dict(form_columns = ['id', 'journal', 'article_name', 'annotation_ua', 'annotation_ua', 'key_words_ua', 'key_words', 'topic']))]
 

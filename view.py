@@ -82,15 +82,20 @@ class BaseModelView(ModelView):
 
 class ArticleAdminView(AdminMixin, BaseModelView):
     column_searchable_list = ('authors', 'article_name', 'org', 'file_name')
-    column_labels = dict(org='Organization')
+    column_labels = dict(org='Організація', authors = 'Автор', article_name = 'Назва статті', topic = 'Розділ',
+                         created = 'Подано', file_name = 'Назва файлу', update_file = 'Зміна файлу', review = 'До друку',
+                         journal = 'Номер журналу', author = 'Автор', coauthors = 'Співавтори', num_pages = 'Сторінки',
+                         annotation_ua = 'Анотація', annotation = 'Annotation', key_words_ua = 'Ключові слова',
+                         key_words = 'Keywords')
     column_list = ('authors', 'org', 'article_name', 'topic', 'created', 'file_name', 'update_file', 'review')
     #column_sortable_list = ('file_name')
     #column_default_sort = 'author'
     can_view_details = True
     column_default_sort =('created', True)
-    form_columns = ['journal', 'author', 'coauthors', 'topic', 'article_name', 'num_pages', 'annotation_ua', 'annotation_ua', 'key_words_ua', 'key_words', 'review', 'file']
+    form_columns = ['journal', 'author', 'coauthors', 'topic', 'article_name', 'num_pages', 'annotation_ua',
+                    'annotation', 'key_words_ua', 'key_words', 'file']
     #form_args = dict(journal=dict(default=(Journal.query.order_by(Journal.id.desc()).first().id)))
-    form_extra_fields = {'file': FileField('File (.pdf)')}
+    form_extra_fields = {'file': FileField('File (.doc, .docx, .pdf)')}
     new_author = FormField(New_Author)
 
 
@@ -139,9 +144,10 @@ class TopicAdminView(AdminMixin, BaseModelView):
 class AuthorAdminView(AdminMixin, BaseModelView):
     column_searchable_list = ('l_name', 'f_name', 'org', 'email', 'phone')
     column_default_sort = 'l_name'
-    column_labels = dict(org = 'Organization')
-    column_list = ('l_name', 'f_name','stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone')
-    form_columns = ['l_name', 'f_name','stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone']
+    column_labels = dict(org = 'Організація', l_name = 'Призвище', f_name = "Ім'я", stepen = 'Науковий ступінь',
+                         zvanie = 'Наукове звання', dolzh = 'Посада', phone = 'Телефон')
+    column_list = ('f_name', 'l_name', 'stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone')
+    form_columns = ['f_name', 'l_name', 'stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone']
 
     #inline_models = [(Article, dict(form_columns = ['id', 'journal', 'article_name', 'annotation_ua', 'annotation_ua', 'key_words_ua', 'key_words', 'topic']))]
 

@@ -15,3 +15,4 @@ class Configuration(object):
     CSRF_ENABLED = True
     SECURITY_PASSWORD_SALT = 'salt'
     SECURITY_PASSWORD_HASH = 'sha512_crypt'
+    SECURITY_REGISTERABLE = True

@@ -1,0 +1,41 @@
+# Download Docker images:
+#
+# $ docker-compose pull
+#
+#
+# Run:
+#
+# $ docker-compose up --build -d
+#
+#
+# View logs:
+#
+# $ docker-compose logs --follow
+#
+#
+# Access Swagger UI, interactive API documentation: http://127.0.0.1:5000/api/v1/
+#
+
+version: '3'
+services:
+  web:
+    build: .
+    environment:
+      JOURNAL_DB_PASSWORD: "xZGY0NjBiNDNiNTZjY"
+      JOURNAL_DB_HOST: "db"
+    ports:
+      - 5000:5000
+    volumes:
+      - ./pdf_files:/var/www/pdf_files
+    links:
+      - db
+    restart: on-failure
+
+  db:
+    image: yobasystems/alpine-mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: "xZGY0NjBiNDNiNTZjY"
+      MYSQL_DATABASE: "journal"
+    volumes:
+      - ./persistent/db-data:/var/lib/mysql
+    restart: on-failure

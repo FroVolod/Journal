@@ -1,0 +1,11 @@
+flask
+flask-admin
+
+mysql-connector
+alembic
+flask-sqlalchemy
+flask-migrate
+
+flask-script
+flask-security
+flask-wtf

@@ -1,0 +1,16 @@
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+persistent
+
+.git*
+
+**/.*
+
+**/__pycache__
+**/*.pyc
+**/*.bak
+**/*.swp
+**/*.log
+

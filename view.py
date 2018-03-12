@@ -137,6 +137,7 @@ class ArticleAdminView(AdminMixin, BaseModelView):
         return super(ArticleAdminView, self).on_model_change(form, model, is_created)
 
 class TopicAdminView(AdminMixin, BaseModelView):
+    column_labels = dict(topic_name='Назва розділу')
     column_default_sort = 'topic_name'
     form_columns = ['topic_name']
 
@@ -158,6 +159,7 @@ class AuthorAdminView(AdminMixin, BaseModelView):
         return super(BaseModelView, self).on_model_change(form, model, is_created)
 
 class JournalAdminView(AdminMixin, BaseModelView):
+    column_labels = dict(year = 'Рік', number = 'Номер журналу')
     form_columns = ['year', 'number']
 
 

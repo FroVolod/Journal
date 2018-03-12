@@ -14,15 +14,15 @@
     {% block model_menu_bar %}
     <ul class="nav nav-tabs actions-nav">
         <li class="active">
-            <a href="javascript:void(0)">{{ _gettext('List') }}{% if count %} ({{ count }}){% endif %}</a>
+            <a href="javascript:void(0)">{{ _gettext('Перелік') }}{% if count %} ({{ count }}){% endif %}</a>
         </li>
 
         {% if admin_view.can_create %}
         <li>
           {%- if admin_view.create_modal -%}
-            {{ lib.add_modal_button(url=get_url('.create_view', url=return_url, modal=True), title=_gettext('Create New Record'), content=_gettext('Create')) }}
+            {{ lib.add_modal_button(url=get_url('.create_view', url=return_url, modal=True), title=_gettext('Створити новий запис'), content=_gettext('Створити')) }}
           {% else %}
-            <a href="{{ get_url('.create_view', url=return_url) }}" title="{{ _gettext('Create New Record') }}">{{ _gettext('Create') }}</a>
+            <a href="{{ get_url('.create_view', url=return_url) }}" title="{{ _gettext('Створити новий запис') }}">{{ _gettext('Створити') }}</a>
           {%- endif -%}
         </li>
         {% endif %}
@@ -75,12 +75,12 @@
                 {% block list_header scoped %}
                     {% if actions %}
                     <th class="list-checkbox-column">
-                        <input type="checkbox" name="rowtoggle" class="action-rowtoggle" title="{{ _gettext('Select all records') }}" />
+                        <input type="checkbox" name="rowtoggle" class="action-rowtoggle" title="{{ _gettext('Виділити всі записи') }}" />
                     </th>
                     {% endif %}
                     {% block list_row_actions_header %}
                         {% if admin_view.column_display_actions %}
-                        <th class="span1">&nbsp;</th>
+                        <th class="span1" >&nbsp;</th>
                         {% endif %}
                     {% endblock %}
                     {% for c, name in list_columns %}
@@ -88,7 +88,7 @@
                     <th class="column-header col-{{c}}">
                         {% if admin_view.is_sortable(c) %}
                             {% if sort_column == column %}
-                                <a href="{{ sort_url(column, True) }}" title="{{ _gettext('Sort by %(name)s', name=name) }}">
+                                <a href="{{ sort_url(column, True) }}" title="{{ _gettext('Сортувати за %(name)s', name=name) }}">
                                     {{ name }}
                                     {% if sort_desc %}
                                         <i class="fa fa-chevron-up icon-chevron-up"></i>
@@ -97,7 +97,7 @@
                                     {% endif %}
                                 </a>
                             {% else %}
-                                <a href="{{ sort_url(column) }}" title="{{ _gettext('Sort by %(name)s', name=name) }}">{{ name }}</a>
+                                <a href="{{ sort_url(column) }}" title="{{ _gettext('Сортувати за %(name)s', name=name) }}">{{ name }}</a>
                             {% endif %}
                         {% else %}
                             {{ name }}
@@ -118,7 +118,7 @@
             {% block list_row scoped %}
                 {% if actions %}
                 <td>
-                    <input type="checkbox" name="rowid" class="action-checkbox" value="{{ get_pk_value(row) }}" title="{{ _gettext('Select record') }}" />
+                    <input type="checkbox" name="rowid" class="action-checkbox" value="{{ get_pk_value(row) }}" title="{{ _gettext('Виділити запис') }}" />
                 </td>
                 {% endif %}
                 {% block list_row_actions_column scoped %}

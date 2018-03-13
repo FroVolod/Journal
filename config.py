@@ -2,7 +2,7 @@ import os
 
 
 class Configuration(object):
-    DEBUG = os.getenv('JOURNAL_DEBUG', True)
+    DEBUG = os.getenv('JOURNAL_DEBUG', 'True') == 'True'
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://{user}:{password}@{host}/{database}'.format(
         user=os.getenv('JOURNAL_DB_USER', 'root'),
         password=os.getenv('JOURNAL_DB_PASSWORD', '1234'),

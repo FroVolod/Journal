@@ -1,6 +1,4 @@
 from app import manager
-from main import *
-from models import *
 
 
 

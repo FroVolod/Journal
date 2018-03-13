@@ -16,3 +16,4 @@ class Configuration(object):
     SECURITY_PASSWORD_SALT = 'salt'
     SECURITY_PASSWORD_HASH = 'sha512_crypt'
     SECURITY_REGISTERABLE = True
+    SECURITY_SEND_REGISTER_EMAIL = False

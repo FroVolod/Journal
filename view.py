@@ -19,6 +19,7 @@ def co_author(author):
         coauthor = Coauthor.query.filter(Coauthor.f_name == author['f_name']).first()
         if coauthor:
             coauthor.f_name = author['f_name']
+            coauthor.f2_name = author['f2_name']
             coauthor.l_name = author['l_name']
             coauthor.organization = author['org']
             coauthor.stepen = author['stepen']
@@ -30,7 +31,7 @@ def co_author(author):
             #coauthor.slug = author.slug
             db.session.merge(coauthor)
         else:
-            coauthor = Coauthor(f_name=author['f_name'], l_name=author['l_name'], organization=author['org'],
+            coauthor = Coauthor(f_name=author['f_name'], f2_name = author['f2_name'], l_name=author['l_name'], organization=author['org'],
                                 email=author['email'], phone=author['phone'], stepen = author['stepen'],
                                 zvanie = author['zvanie'], dolzh = author['dolzh'])
             db.session.add(coauthor)
@@ -145,10 +146,10 @@ class TopicAdminView(AdminMixin, BaseModelView):
 class AuthorAdminView(AdminMixin, BaseModelView):
     column_searchable_list = ('l_name', 'f_name', 'org', 'email', 'phone')
     column_default_sort = 'l_name'
-    column_labels = dict(org = 'Організація', l_name = 'Призвище', f_name = "Ім'я", stepen = 'Науковий ступінь',
+    column_labels = dict(org = 'Організація', l_name = 'Призвище', f_name = "Ім'я", f2_name = 'По-батькові', stepen = 'Науковий ступінь',
                          zvanie = 'Наукове звання', dolzh = 'Посада', phone = 'Телефон')
-    column_list = ('f_name', 'l_name', 'stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone')
-    form_columns = ['f_name', 'l_name', 'stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone']
+    column_list = ('f_name', 'f2_name', 'l_name', 'stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone')
+    form_columns = ['f_name', 'f2_name', 'l_name', 'stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone']
 
     #inline_models = [(Article, dict(form_columns = ['id', 'journal', 'article_name', 'annotation_ua', 'annotation_ua', 'key_words_ua', 'key_words', 'topic']))]
 

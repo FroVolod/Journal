@@ -84,7 +84,7 @@ class ArticleAdminView(AdminMixin, BaseModelView):
     column_searchable_list = ('authors', 'article_name', 'org', 'file_name')
     column_labels = dict(org='Організація', authors = 'Автор', article_name = 'Назва статті', topic = 'Розділ',
                          created = 'Подано', file_name = 'Назва файлу', update_file = 'Зміна файлу', review = 'До друку',
-                         journal = 'Номер журналу', author = 'Автор', coauthors = 'Співавтори', num_pages = 'Сторінки',
+                         journal = 'Номер журналу', author = 'Автор', coauthors = 'Співавтори', num_pages = 'Кількість сторінок',
                          annotation_ua = 'Анотація', annotation = 'Annotation', key_words_ua = 'Ключові слова',
                          key_words = 'Keywords')
     column_list = ('authors', 'org', 'article_name', 'topic', 'created', 'file_name', 'update_file', 'review')

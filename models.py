@@ -33,6 +33,7 @@ articles_coauthors = db.Table('articles_coauthors',
 class Author(db.Model):
     id      = db.Column(db.Integer, primary_key = True)
     f_name  = db.Column(db.String(80))
+    f2_name = db.Column(db.String(80))
     l_name  = db.Column(db.String(80))
     stepen  = db.Column(db.String(80))
     zvanie  = db.Column(db.String(80))
@@ -49,16 +50,17 @@ class Author(db.Model):
 
     def generate_slug(self):
         if self.l_name:
-            s = self.l_name + ' ' + self.f_name
+            s = self.l_name + ' ' + self.f_name + ' ' + self.f2_name
             self.slug = slugify(s)
 
     def __repr__(self):
-        return '{} {}, {}'.format(self.l_name, self.f_name, self.org)
+        return '{} {} {}, {}'.format(self.l_name, self.f_name, self.f2_name, self.org)
 
 
 class Coauthor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     f_name = db.Column(db.String(80))
+    f2_name = db.Column(db.String(80))
     l_name = db.Column(db.String(80))
     stepen = db.Column(db.String(80))
     zvanie = db.Column(db.String(80))
@@ -74,11 +76,11 @@ class Coauthor(db.Model):
 
     def generate_slug(self):
         if self.l_name:
-            s = self.l_name + ' ' + self.f_name
+            s = self.l_name + ' ' + self.f_name + ' ' + self.f2_name
             self.slug = slugify(s)
 
     def __repr__(self):
-        return '{} {}, {}'.format(self.l_name, self.f_name, self.organization)
+        return '{} {} {}, {}'.format(self.l_name, self.f_name, self.f2_name, self.org)
 
 
 class Article(db.Model):

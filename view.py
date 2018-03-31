@@ -114,7 +114,7 @@ class ArticleAdminView(AdminMixin, BaseModelView):
                 journal = Journal.query.filter(Journal.id == jour).first()
                 author = Author.query.filter(Author.id == request.form['author']).first()
                 model.org = author.org
-                model.authors = author.l_name + ' ' + author.f_name
+                model.authors = author.l_name + ' ' + author.f_name[0] + '. ' + author.f2_name[0] + '.'
                 print(file.filename.rsplit('.', 1)[1])
                 print(author.org)
                 print(author.f_name)

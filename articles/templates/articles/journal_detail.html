@@ -6,15 +6,77 @@
 
 
 {% block content_title %}
-    Статьи журнала № {{ number }} за {{ year }} год
+    Статті журналу № {{ number }} за {{ year }} рік   ({{ s }} стор.)
 {% endblock %}
 
 
 {% block content %}
+    <div>
+        <table class="head" style="width: 100%">
+            <colgroup>
+                <col style="width: 20%">
+                <col style="width: 35%">
+                <col style="width: 45%">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th> Розділ </th>
+                    <th> Автори </th>
+                    <th> Назва статті </th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
 
-    {% for a in articles %}
+
+    <div class="body" style="height: 40%; owerflow-y: scroll;">
         <div>
+            <table id="journal_detail_articles" style="width: 100%">
+                <colgroup>
+                    <col style="width: 20%">
+                    <col style="width: 35%">
+                    <col style="width: 45%">
+                </colgroup>
+                <tbody>
+                    {% for a in articles %}
+                        <tr>
+                            <td>
+                                {{ a.topic }}
+                            </td>
+                            <td>
+
+                                    <a href="">
+                                        {{a.author.l_name}} {{a.author.f_name[0]}}. {{a.author.f2_name[0]}}.
+                                    </a>
+
+                                    {% for c in a.coauthors %}
+
+                                            <a href=""> , &nbsp {{ c.l_name }} {{c.f_name[0]}}. {{c.f2_name[0]}}. </a>
+
+                                    {% endfor %}
+
+
+                            </td>
+                            <td>
+                                <a href="{{ url_for('articles.article_detail', slug = a.slug) }}">
+                                    {{ a.article_name }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+  <!--  {% for a in articles %}
+        <div>
+            <p>
             <p>
                 Статья:
                 <a href="{{ url_for('articles.article_detail', slug = a.slug) }}">
@@ -24,7 +86,7 @@
             <p>
                 Авторы:
                 <a href="">
-                    {{a.author.l_name}} {{a.author.f_name}}
+                    {{a.author.l_name}} {{a.author.f_name[0]}}. {{a.author.f2_name[0]}}.
                 </a>
                 <a href="">
                     ( {{ a.org }} )
@@ -36,6 +98,7 @@
                     </p>
                 {% endfor %}
 
+            </p>
             </p>
         </div>
     {% endfor %}

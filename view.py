@@ -89,7 +89,7 @@ class ArticleAdminView(AdminMixin, BaseModelView):
                          annotation_ua = 'Анотація', annotation = 'Annotation', key_words_ua = 'Ключові слова',
                          key_words = 'Keywords')
     column_list = ('authors', 'org', 'article_name', 'topic', 'created', 'file_name', 'update_file', 'review')
-    #column_sortable_list = ('file_name')
+    #column_sortable_list = ('topic')
     #column_default_sort = 'author'
     can_view_details = True
     column_default_sort =('created', True)
@@ -120,7 +120,7 @@ class ArticleAdminView(AdminMixin, BaseModelView):
                 print(author.f_name)
                 print(author.l_name)
                 print(journal.slug)
-                file_name =re.sub(r'[^\w+]', '_', journal.slug + '_' + author.l_name + '_' + author.f_name + '_' + author.org)\
+                file_name =re.sub(r'[^\w+]', '_', journal.slug + '_' + author.l_name + '_' + author.f_name[0] + '_' + author.f2_name[0])\
                                     + str(os.path.splitext(file.filename)[1])
                 print(author.org)
                 print(file_name)

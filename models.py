@@ -80,7 +80,7 @@ class Coauthor(db.Model):
             self.slug = slugify(s)
 
     def __repr__(self):
-        return '{} {} {}, {}'.format(self.l_name, self.f_name, self.f2_name, self.org)
+        return '{} {} {}, {}'.format(self.l_name, self.f_name, self.f2_name, self.organization)
 
 
 class Article(db.Model):

@@ -26,9 +26,7 @@ def journal_detail(slug):
     journal = Journal.query.filter(Journal.slug == slug).first()
     articles = journal.articles.all()[::-1]
 
-    for a in articles:
-        if a.num_pages:
-            s =+ a.num_pages
+    s = sum(a.num_pages for a in articles if a.num_pages)
 
     return render_template('articles/journal_detail.html', number = journal.number, year = journal.year, articles = articles, s = s)
 

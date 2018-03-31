@@ -87,7 +87,7 @@ class Article(db.Model):
     id           = db.Column(db.Integer, primary_key = True)
     article_name = db.Column(db.String(250))
     slug         = db.Column(db.String(250), unique = True)
-    num_pages    = db.Column(db.Integer)
+    num_pages    = db.Column(db.Integer, default = 1)
     review       = db.Column(db.Boolean())
     created      = db.Column(db.DateTime, default = datetime.now())
     file_name    = db.Column(db.Text)

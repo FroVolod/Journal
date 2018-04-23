@@ -58,29 +58,11 @@ class Author(db.Model):
 
 
 class Coauthor(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    f_name = db.Column(db.String(80))
-    f2_name = db.Column(db.String(80))
-    l_name = db.Column(db.String(80))
-    stepen = db.Column(db.String(80))
-    zvanie = db.Column(db.String(80))
-    dolzh  = db.Column(db.String(80))
-    email  = db.Column(db.String(120), unique=True)
-    phone  = db.Column(db.String(30))
-    slug   = db.Column(db.String(250), unique=True)
-    organization = db.Column(db.Text)
-
-    def __init__(self, *args, **kwargs):
-        super(Coauthor, self).__init__(*args, **kwargs)
-        self.generate_slug()
-
-    def generate_slug(self):
-        if self.l_name:
-            s = self.l_name + ' ' + self.f_name + ' ' + self.f2_name
-            self.slug = slugify(s)
+    id = db.Column(db.Integer, db.ForeignKey('author.id'), primary_key=True)
+    author = db.relationship('Author')
 
     def __repr__(self):
-        return '{} {} {}, {}'.format(self.l_name, self.f_name, self.f2_name, self.organization)
+        return repr(self.author)
 
 
 class Article(db.Model):

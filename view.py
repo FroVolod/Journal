@@ -10,32 +10,6 @@ from flask_security import current_user
 from articles.forms import New_Author
 
 
-def co_author(author):
-    print('Проверка входа в def co_author')
-    if request.method == 'POST' and request.form['f_name']:
-        print('Проверка reques.method:', request.method)
-        author = request.form
-        print(author['org'])
-        coauthor = Coauthor.query.filter(Coauthor.f_name == author['f_name']).first()
-        if coauthor:
-            coauthor.f_name = author['f_name']
-            coauthor.f2_name = author['f2_name']
-            coauthor.l_name = author['l_name']
-            coauthor.organization = author['org']
-            coauthor.stepen = author['stepen']
-            coauthor.zvanie = author['zvanie']
-            coauthor.dolzh = author['dolzh']
-            #coauthor.organization = Organization.query.filter(Organization.id == author['organization']).first().name
-            coauthor.email = author['email']
-            coauthor.phone = author['phone']
-            #coauthor.slug = author.slug
-            db.session.merge(coauthor)
-        else:
-            coauthor = Coauthor(f_name=author['f_name'], f2_name = author['f2_name'], l_name=author['l_name'], organization=author['org'],
-                                email=author['email'], phone=author['phone'], stepen = author['stepen'],
-                                zvanie = author['zvanie'], dolzh = author['dolzh'])
-            db.session.add(coauthor)
-        db.session.commit()
 
 
 
@@ -156,7 +130,8 @@ class AuthorAdminView(AdminMixin, BaseModelView):
 
     def on_model_change(self, form, model, is_created):
         model.generate_slug()
-        co_author(self)
+        if is_created:
+            db.session.add(Coauthor(author=model))
         return super(BaseModelView, self).on_model_change(form, model, is_created)
 
 class JournalAdminView(AdminMixin, BaseModelView):

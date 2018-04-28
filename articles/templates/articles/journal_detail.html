@@ -45,10 +45,13 @@
                                 {{ a.topic }}
                             </td>
                             <td>
-
+                                    {% if a.author.f_name %}
                                     <a href="">
                                         {{a.author.l_name}} {{a.author.f_name[0]}}. {{a.author.f2_name[0]}}.
                                     </a>
+                                    {% else %}
+                                        Автор відсутній
+                                    {% endif %}
 
                                     {% for c in a.coauthors %}
 
@@ -70,38 +73,6 @@
         </div>
     </div>
 
-
-
-
-
-  <!--  {% for a in articles %}
-        <div>
-            <p>
-            <p>
-                Статья:
-                <a href="{{ url_for('articles.article_detail', slug = a.slug) }}">
-                    {{ a.article_name }}
-                </a>
-            </p>
-            <p>
-                Авторы:
-                <a href="">
-                    {{a.author.l_name}} {{a.author.f_name[0]}}. {{a.author.f2_name[0]}}.
-                </a>
-                <a href="">
-                    ( {{ a.org }} )
-                </a>
-
-                {% for c in a.coauthors %}
-                    <p>
-                        <a href="">  {{ c.l_name }} {{c.f_name}} </a>
-                    </p>
-                {% endfor %}
-
-            </p>
-            </p>
-        </div>
-    {% endfor %}
 
 
 

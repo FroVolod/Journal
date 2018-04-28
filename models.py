@@ -59,7 +59,7 @@ class Author(db.Model):
 
 class Coauthor(db.Model):
     id = db.Column(db.Integer, db.ForeignKey('author.id'), primary_key=True)
-    author = db.relationship('Author')
+    author = db.relationship('Author', backref=db.backref("coauth", cascade="all,delete-orphan"))
 
     def __repr__(self):
         return repr(self.author)

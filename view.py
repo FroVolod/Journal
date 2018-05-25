@@ -120,7 +120,7 @@ class TopicAdminView(AdminMixin, BaseModelView):
 class AuthorAdminView(AdminMixin, BaseModelView):
     column_searchable_list = ('l_name', 'f_name', 'org', 'email', 'phone')
     column_default_sort = 'l_name'
-    column_labels = dict(org = 'Організація', l_name = 'Призвище', f_name = "Ім'я", f2_name = 'По-батькові', stepen = 'Науковий ступінь',
+    column_labels = dict(org = 'Організація', l_name = 'Прізвище', f_name = "Ім'я", f2_name = 'По-батькові', stepen = 'Науковий ступінь',
                          zvanie = 'Наукове звання', dolzh = 'Посада', phone = 'Телефон')
     column_list = ('f_name', 'f2_name', 'l_name', 'stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone')
     form_columns = ['f_name', 'f2_name', 'l_name', 'stepen', 'zvanie', 'dolzh', 'org', 'email', 'phone']
